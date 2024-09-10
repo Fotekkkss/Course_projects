@@ -4,6 +4,13 @@ public class Car {
     public int year;
     public int distance_driven;
 
+    public Car(String mark, String model, int year, int distance_driven){
+        this.mark = mark;
+        this.model = model;
+        this.year = year;
+        this.distance_driven = distance_driven;
+    }
+
     public void ride(){
         System.out.println("Drive!");
     }

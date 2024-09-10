@@ -1,10 +1,13 @@
 public class StudentTest {
     public static void main(String[] args) {
+        Student.myUnivercity();
+
         Student[] students = new Student[3];
         Student first_student = new Student();
         Student secon_student = new Student();
         Student third_strudent = new Student();
 
+        String univercity = Student.name_of_university;
 
         first_student.name = "Bob";
         first_student.surname = "Maze";

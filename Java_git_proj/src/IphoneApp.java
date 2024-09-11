@@ -1,4 +1,4 @@
-public class IphoneApp extends App{
+public class IphoneApp extends App {
 
     public IphoneApp(String appName) {
         super(appName);

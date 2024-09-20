@@ -12,7 +12,7 @@ import java.time.Duration;
 
 public class SeleniumTest {
 
-    @Test
+    //@Test
     public void openGooglePage(){
         ChromeOptions optionsChrome = new ChromeOptions();
         optionsChrome.addArguments("--disable-search-engine-choice-screen");

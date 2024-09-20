@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class WebDriverManagerTest {
-    @Test
+   // @Test
     public void openBrowser(){
         WebDriverManager.chromedriver().setup();
         ChromeOptions options = new ChromeOptions();

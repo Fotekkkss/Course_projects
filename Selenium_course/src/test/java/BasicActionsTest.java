@@ -1,8 +1,5 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.Select;
@@ -22,11 +19,15 @@ public class BasicActionsTest {
         WebElement basicPageLink = driver.findElement(By.linkText("Podstawowa strona testowa"));
         basicPageLink.click();
 
-        //driver.findElement(By.id("clickOnMe")).click();
-        driver.findElement(By.id("fname")).sendKeys("Sending kets");
+        driver.findElement(By.id("clickOnMe")).click();
+        driver.switchTo().alert().accept();
+        driver.findElement(By.id("fname")).sendKeys("Sending keys");
         driver.findElement(By.name("username")).clear();
         driver.findElement(By.name("username")).sendKeys("Admin");
-        //driver.findElement(By.name("username")).sendKeys(Keys.ENTER);
+        driver.findElement(By.name("username")).sendKeys(Keys.ENTER);
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
+        driver.switchTo().alert().accept();
         driver.findElement(By.cssSelector("[type='checkbox']")).click();
         driver.findElement(By.cssSelector("[value='male']")).click();
 
@@ -38,6 +39,18 @@ public class BasicActionsTest {
         for (WebElement option : carsOptions){
             System.out.println(option.getText());
         }
+
+        System.out.println(driver.findElement(By.name("username")).getText());
+        System.out.println(driver.findElement(By.name("username")).getAttribute("value"));
+
+        WebElement hiddenPar = driver.findElement(By.cssSelector(".topSecret"));
+        System.out.println("By text: "+hiddenPar.getText());
+        System.out.println("By attribute: "+hiddenPar.getAttribute("value"));
+        System.out.println("By text content: "+hiddenPar.getAttribute("textContent"));
+
+
+
+
 
 
 

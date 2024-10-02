@@ -18,7 +18,7 @@ import java.time.Duration;
 import java.util.List;
 @Listeners(value = {SampleTestListener.class})
 public class FirstTest extends BaseTest {
-    WebDriver driver;
+    static WebDriver driver;
     @Test
     public void firstTest(){
         WebDriverManager.chromedriver().setup();

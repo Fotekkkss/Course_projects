@@ -1,23 +1,15 @@
+package pl.seleniumdemo.tests;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
+public class HomeWork1Test extends BaseTest {
 
-public class HomeWork1 {
 
     @Test
-    public void searchNoCity(){
-        WebDriver driver = new ChromeDriver();
-        ChromeOptions optionsChrome = new ChromeOptions();
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
-        optionsChrome.addArguments("--disable-search-engine-choice-screen");
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
+    public void searchNoCityTest(){
 
         driver.findElement(By.name("checkin")).sendKeys("17.04.2025");
         driver.findElement(By.name("checkout")).click();
@@ -31,5 +23,6 @@ public class HomeWork1 {
         driver.findElement(By.xpath("//button[text()=' Search']")).click();
         WebElement noResultFound = driver.findElement(By.xpath("//h2[text()='No Results Found']"));
         Assert.assertTrue(noResultFound.getText().contains("No Results Found"));
+
     }
 }

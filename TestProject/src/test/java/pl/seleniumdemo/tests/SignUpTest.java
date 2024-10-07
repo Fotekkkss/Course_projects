@@ -1,25 +1,14 @@
-import io.github.bonigarcia.wdm.WebDriverManager;
+package pl.seleniumdemo.tests;
+
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
+public class SignUpTest extends BaseTest {
 
-public class SignUpTest {
     @Test
-    public void signUp(){
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        ChromeOptions optionsChrome = new ChromeOptions();
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
-        optionsChrome.addArguments("--disable-search-engine-choice-screen");
-        driver.manage().window().maximize();
-        driver.get("http://www.kurs-selenium.pl/demo/");
-
+    public void signUpTest(){
         String lastName = "Tested";
         int randomNumber = (int) (Math.random()*1000);
 

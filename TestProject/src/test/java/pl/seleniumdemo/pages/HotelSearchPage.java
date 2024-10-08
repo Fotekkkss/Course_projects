@@ -5,10 +5,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import pl.seleniumdemo.tests.HotelSearchTest;
 
-import java.util.List;
-import java.util.stream.Collectors;
 
 public class HotelSearchPage {
 
@@ -18,8 +15,6 @@ public class HotelSearchPage {
     @FindBy(xpath = "//div[@id='select2-drop']//input")
     private WebElement searchHotelInput;
 
-    @FindBy(xpath = "//span[@class='select2-match' and text()='Dubai']")
-    private WebElement hotelMatch;
 
     @FindBy(name = "checkin")
     private WebElement checkinInput;
@@ -40,14 +35,18 @@ public class HotelSearchPage {
     @FindBy(xpath = "//button[text()=' Search']")
     private WebElement searchBtn;
 
+    private WebDriver driver;
+
     public HotelSearchPage(WebDriver driver){
         PageFactory.initElements(driver,this);
+        this.driver = driver;
     }
 
     public void setCity(String cityName){
         searchHotelClassName.click();
         searchHotelInput.sendKeys(cityName);
-        hotelMatch.click();
+        String xpath = String.format("//span[@class='select2-match' and text()='%s']", cityName);
+        driver.findElement(By.xpath(xpath)).click();
     }
 
     public void setDates(String checkin, String checkout){

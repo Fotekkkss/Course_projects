@@ -1,7 +1,5 @@
 package pl.seleniumdemo.tests;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -37,7 +35,14 @@ public class SignUpTest extends BaseTest {
         Assert.assertTrue(loggedUserPage.getHeadingText().contains(lastName));
         Assert.assertEquals(loggedUserPage.getHeadingText(), "Hi, Bob Tested");
 
-    }@Test
+    }
+
+
+
+
+
+
+    /*@Test
     public void signUpTest2(){
         String lastName = "Tested";
         int randomNumber = (int) (Math.random()*1000);
@@ -53,5 +58,5 @@ public class SignUpTest extends BaseTest {
         Assert.assertTrue(loggedUserPage.getHeadingText().contains(lastName));
         Assert.assertEquals(loggedUserPage.getHeadingText(), "Hi, Bob Tested");
 
-    }
+    }*/
 }

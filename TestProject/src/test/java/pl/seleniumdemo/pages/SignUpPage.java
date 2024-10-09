@@ -1,9 +1,7 @@
 package pl.seleniumdemo.pages;
 
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.devtools.v85.page.Page;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
@@ -66,7 +64,7 @@ public class SignUpPage {
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
     }
-    public void fillSignUpForm(String firstname, String lastname, String phone, String email, String password){
+    /*public void fillSignUpForm(String firstname, String lastname, String phone, String email, String password){
         firstNameInput.sendKeys(firstname);
         lastNameInput.sendKeys(lastname);
         phoneInput.sendKeys(phone);
@@ -74,5 +72,5 @@ public class SignUpPage {
         passwordInput.sendKeys(password);
         confirmpasswordInput.sendKeys(password);
         signUpButton.click();
-    }
+    }*/
 }

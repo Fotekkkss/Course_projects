@@ -1,5 +1,7 @@
 package pl.seleniumdemo.pages;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -45,40 +47,50 @@ public class HotelSearchPage {
 
     private WebDriver driver;
 
-    public HotelSearchPage(WebDriver driver){
-        PageFactory.initElements(driver,this);
+    private static final Logger logger = LogManager.getLogger();
+
+    public HotelSearchPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
         this.driver = driver;
     }
 
-    public void setCity(String cityName){
+    public void setCity(String cityName) {
+        logger.info("Setting city " + cityName);
         searchHotelClassName.click();
         searchHotelInput.sendKeys(cityName);
         String xpath = String.format("//span[@class='select2-match' and text()='%s']", cityName);
         driver.findElement(By.xpath(xpath)).click();
+        logger.info("City setting done");
     }
 
-    public void setDates(String checkin, String checkout){
+    public void setDates(String checkin, String checkout) {
+        logger.info("Setting dates check-in " + checkin + " check-out " + checkout);
         checkinInput.sendKeys(checkin);
         checkoutInput.sendKeys(checkout);
+        logger.info("Setting dates done");
     }
 
-    public void setTravelers(int adultsToAdd, int childrenToAdd){
+    public void setTravelers(int adultsToAdd, int childrenToAdd) {
+        logger.info("Adding adults: " + adultsToAdd + " Adding children: " + childrenToAdd);
         travelersInput.click();
         addTraveler(adultPlusBtn, adultsToAdd);
         addTraveler(childPlusBtn, childrenToAdd);
+        logger.info("Setting travellers done");
     }
 
-    public void addTraveler(WebElement travelerBtn, int numberOfTravelers){
-        for (int i=0; i<numberOfTravelers;i++){
+    public void addTraveler(WebElement travelerBtn, int numberOfTravelers) {
+        for (int i = 0; i < numberOfTravelers; i++) {
             travelerBtn.click();
         }
     }
 
-    public void performSearch(){
+    public void performSearch() {
+        logger.info("Performing search");
         searchBtn.click();
+        logger.info("Search done");
     }
 
-    public void openSignUpForm(){
+    public void openSignUpForm() {
         myAccountLink.stream().filter(WebElement::isDisplayed).findFirst().ifPresent(WebElement::click);
         signUpLink.get(1).click();
     }

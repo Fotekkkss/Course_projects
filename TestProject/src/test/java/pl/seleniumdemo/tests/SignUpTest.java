@@ -1,5 +1,6 @@
 package pl.seleniumdemo.tests;
 
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -7,13 +8,16 @@ import org.testng.annotations.Test;
 import pl.seleniumdemo.pages.HotelSearchPage;
 import pl.seleniumdemo.pages.LoggedUserPage;
 import pl.seleniumdemo.pages.SignUpPage;
+import pl.seleniumdemo.utils.SeleniumHelper;
+
+import java.time.Duration;
 
 public class SignUpTest extends BaseTest {
 
     private static final Logger log = LoggerFactory.getLogger(SignUpTest.class);
 
     @Test
-    public void signUpTest(){
+    public void signUpTest() throws InterruptedException {
         String lastName = "Tested";
         int randomNumber = (int) (Math.random()*1000);
 

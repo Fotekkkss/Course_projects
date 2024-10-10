@@ -1,5 +1,6 @@
 package pl.seleniumdemo.pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -13,13 +14,15 @@ public class LoggedUserPage {
 
     private WebDriver driver;
 
-    public String getHeadingText(){
-        SeleniumHelper.waitForElementToBeVisible(driver, heading);
-        return heading.getText();
-    }
-
     public LoggedUserPage(WebDriver driver){
         PageFactory.initElements(driver, this);
         this.driver = driver;
     }
+
+    public String getHeadingText(){
+        SeleniumHelper.waitForElementToExists(driver, By.xpath("//h3[@class='RTL']"));
+        return heading.getText();
+    }
+
+
 }

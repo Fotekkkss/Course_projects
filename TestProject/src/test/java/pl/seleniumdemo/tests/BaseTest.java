@@ -15,7 +15,7 @@ public class BaseTest {
     public void setup() throws IOException {
         driver = DriverFactory.getDriver();
         ChromeOptions optionsChrome = new ChromeOptions();
-        driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
+        //driver.manage().timeouts().implicitlyWait(10L, TimeUnit.SECONDS);
         optionsChrome.addArguments("--disable-search-engine-choice-screen");
         driver.manage().window().maximize();
         driver.get("http://www.kurs-selenium.pl/demo/");

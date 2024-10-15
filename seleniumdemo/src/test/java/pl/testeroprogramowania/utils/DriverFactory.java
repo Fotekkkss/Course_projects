@@ -6,8 +6,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 
 public class DriverFactory {
 
-// testertest@test.com
-    public static WebDriver getDriver(){
+    // testertest@test.com
+    public static WebDriver getDriver() {
         WebDriverManager.chromedriver().setup();
         return new ChromeDriver();
     }

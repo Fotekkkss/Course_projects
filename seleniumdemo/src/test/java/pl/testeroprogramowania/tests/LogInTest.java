@@ -5,15 +5,16 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pl.testeroprogramowania.pages.HomePage;
 
-public class RegisterTest extends BaseTest {
+public class LogInTest extends BaseTest {
+
 
     @Test
-    public void registerUserTest() throws InterruptedException {
+    public void logInTest() throws InterruptedException {
         int random = (int) (Math.random() * 1000);
 
         WebElement dashboardLink = new HomePage(driver)
                 .openMyAccountPage()
-                .registerUserValidData("test" + random + "@test.com", "test@test.com")
+                .logInValidData("test1@test.com", "test@test.com")
                 .getDashboardLink();
 
         Assert.assertEquals(dashboardLink.getText(), "Dashboard");
@@ -21,15 +22,16 @@ public class RegisterTest extends BaseTest {
     }
 
     @Test
-    public void registerExistingUserTest() throws InterruptedException {
+    public void logInWithInvalidPasswordTest() throws InterruptedException {
 
         WebElement error = new HomePage(driver)
                 .openMyAccountPage()
-                .registerUserInvalidData("test@test.com", "test@test.com")
+                .logInInvalidData("test1@test.com", "tes@test.com")
                 .getError();
 
 
-        Assert.assertTrue(error.getText().contains("An account is already registered with your email address"));
+//        Assert.assertTrue(error.getText().contains(": Incorrect username or password."));
+        Assert.assertTrue(error.getText().contains("Too many failed login attempts"));
         System.out.println(error.getText());
     }
 }

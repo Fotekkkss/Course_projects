@@ -4,6 +4,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.Select;
+import pl.testeroprogramowania.models.Customer;
 
 public class AddressDetailsPage {
 
@@ -19,11 +21,8 @@ public class AddressDetailsPage {
     @FindBy(id = "billing_company")
     private WebElement companyNameInput;
 
-    @FindBy(id = "select2-billing_country-container")
+    @FindBy(id = "billing_country")
     private WebElement countrySelect;
-
-    @FindBy(id = "billing_address_2")
-    private WebElement addressSecondInput;
 
     @FindBy(id = "billing_postcode")
     private WebElement postcodeInput;
@@ -50,5 +49,19 @@ public class AddressDetailsPage {
         this.driver = driver;
     }
 
-
+    public OrderDetailsPage fillAddressDetails(Customer customer, String comments) {
+        nameInput.sendKeys(customer.getFirstName());
+        lastNameInput.sendKeys(customer.getLastName());
+        companyNameInput.sendKeys(customer.getCompanyName());
+        Select countryList = new Select(countrySelect);
+        countryList.selectByVisibleText(customer.getCountryName());
+        addressInput.sendKeys(String.format("%s %s", customer.getStreetAddress(), customer.getHouseNumber()));
+        postcodeInput.sendKeys(customer.getPostcode());
+        cityInut.sendKeys(customer.getCity());
+        emailInput.sendKeys(customer.getEmail());
+        phoneInput.sendKeys(customer.getPhoneNumber());
+        orderCommentsInput.sendKeys(comments);
+        placeOrderButton.click();
+        return new OrderDetailsPage(driver);
+    }
 }

@@ -18,4 +18,8 @@ public class SeleniumHelper {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10L));
         wait.until(ExpectedConditions.elementToBeClickable(locator));
     }
+    public static void waitToBePresent(By locator, WebDriver driver){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10L));
+        wait.until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
 }

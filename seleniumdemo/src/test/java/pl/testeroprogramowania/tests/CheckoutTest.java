@@ -24,4 +24,20 @@ public class CheckoutTest extends BaseTest {
         Assert.assertEquals(orderDetailsPage.getProductName().getText(), "Java Selenium WebDriver × 1");
     }
 
+
+    @Test
+    public void checkoutWithAddingProductsTest() throws InterruptedException {
+        Customer customer = new Customer();
+
+        OrderDetailsPage orderDetailsPage = new HomePage(driver)
+                .openShopPage()
+                .openProduct("Java Selenium WebDriver")
+                .addProductToCart()
+                .viewCart()
+                .addAdditionalProducts(String.valueOf(15))
+                .fillAddressDetails(customer, "Some comment)");
+
+        Assert.assertEquals(orderDetailsPage.getOrderNotice().getText(), "Thank you. Your order has been received.");
+        Assert.assertEquals(orderDetailsPage.getProductName().getText(), "Java Selenium WebDriver × 15");
+    }
 }

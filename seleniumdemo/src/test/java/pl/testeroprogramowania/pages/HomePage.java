@@ -13,6 +13,29 @@ public class HomePage {
     @FindBy(xpath = "//span[text()='Shop']")
     private WebElement shopLink;
 
+    @FindBy(name = "nimble_name")
+    private WebElement nameInput;
+
+    @FindBy(name = "nimble_email")
+    private WebElement emailInput;
+
+    @FindBy(name = "nimble_message")
+    private WebElement messageInput;
+
+    @FindBy(name = "nimble_submit")
+    private WebElement submitButton;
+
+    @FindBy(xpath = "//span[@class='sek-form-message']")
+    private WebElement formSubmittionMessage;
+
+    @FindBy(xpath = "//span[@class='sek-form-message']")
+    private WebElement formSubmittionError;
+
+
+
+    @FindBy(className = "czr-title")
+    private WebElement secondPostage;
+
     private WebDriver driver;
 
     public HomePage(WebDriver driver) {
@@ -28,5 +51,26 @@ public class HomePage {
     public ProductListPage openShopPage() {
         shopLink.click();
         return new ProductListPage(driver);
+    }
+
+    public WebElement fillContactUsFormValidData(String name, String email, String message){
+        nameInput.sendKeys(name);
+        emailInput.sendKeys(email);
+        messageInput.sendKeys(message);
+        submitButton.click();
+        return formSubmittionMessage;
+    }
+
+    public WebElement fillContactUsFormInvalidData(String name, String email, String message){
+        nameInput.sendKeys(name);
+        emailInput.sendKeys(email);
+        messageInput.sendKeys(message);
+        submitButton.click();
+        return formSubmittionError;
+    }
+
+    public WebsiteCommentsPage openCommentsPage(){
+        secondPostage.click();
+        return new WebsiteCommentsPage(driver);
     }
 }

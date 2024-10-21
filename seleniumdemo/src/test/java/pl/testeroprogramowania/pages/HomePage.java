@@ -1,5 +1,7 @@
 package pl.testeroprogramowania.pages;
 
+import net.bytebuddy.asm.Advice;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -31,16 +33,29 @@ public class HomePage {
     @FindBy(xpath = "//span[@class='sek-form-message']")
     private WebElement formSubmittionError;
 
-
+    @FindBy(partialLinkText = "Search")
+    private WebElement searchButton;
 
     @FindBy(className = "czr-title")
     private WebElement secondPostage;
+
+    @FindBy(id = "s-6714b2f1341f6")
+    private WebElement searchInput;
+
+    @FindBy
 
     private WebDriver driver;
 
     public HomePage(WebDriver driver) {
         PageFactory.initElements(driver, this);
         this.driver = driver;
+    }
+
+    public SearchResultsPage findProduct(String productName){
+        searchButton.click();
+        searchInput.sendKeys(productName);
+        searchInput.sendKeys(Keys.ENTER);
+        return new SearchResultsPage(driver);
     }
 
     public MyAccountPage openMyAccountPage() {

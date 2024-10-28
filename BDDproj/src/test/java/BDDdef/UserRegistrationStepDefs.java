@@ -1,5 +1,6 @@
 package BDDdef;
 
+import io.cucumber.java.After;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -10,6 +11,12 @@ import java.time.Duration;
 
 
 public class UserRegistrationStepDefs {
+
+    @After
+
+    public void tearDown(){
+        DriverFactory.quitDriver();
+    }
 
     @Given("User is on main shop age")
     public void user_is_on_main_shop_age() {
@@ -45,14 +52,16 @@ public class UserRegistrationStepDefs {
     }
 
     @And("Enter incorrect data to registration form")
-    public void enterIncorrectDataToRegistrationForm() {
-        DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys("testtest.com");
+    public void enterIncorrectDataToRegistrationForm() throws InterruptedException {
+        DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys("test@test.com");
         DriverFactory.getDriver().findElement(By.id("reg_password")).sendKeys("testassword123");
         DriverFactory.getDriver().findElement(By.name("register")).click();
+        Thread.sleep(Duration.ofSeconds(10));
     }
 
     @Then("Invalid email error appears")
     public void invalidEmailErrorAppears() {
-
+        String error = DriverFactory.getDriver().findElement(By.xpath("//ul[@class='woocommerce-error']//li")).getText();
+        Assert.assertTrue(error.contains("An account is already registered with your email address"));
     }
 }

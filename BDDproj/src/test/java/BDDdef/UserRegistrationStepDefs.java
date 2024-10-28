@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
 import pl.testeroprogramowania.utils.DriverFactory;
+import pl.testeroprogramowania.utils.SeleniumHelper;
 
 import java.time.Duration;
 
@@ -36,12 +37,17 @@ public class UserRegistrationStepDefs {
         int random = (int) (Math.random()*1000);
         DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys("test"+random+"@test.com");
         DriverFactory.getDriver().findElement(By.id("reg_password")).sendKeys("testassworaboba%@d123");
-        DriverFactory.getDriver().findElement(By.name("register")).click();
+        for (int i=0;i<3;i++){
+            if (DriverFactory.getDriver().findElements(By.name("register")).size()>0){
+                DriverFactory.getDriver().findElement(By.name("register")).click();
+            }
         }
+
+    }
 
     @Then("User is redirected to My Account page")
     public void userIsRedirectedToMyAccountPage() throws InterruptedException {
-        Thread.sleep(Duration.ofSeconds(5));
+        SeleniumHelper.waitForElementToExist(By.linkText("Dashboard"));
         Assert.assertEquals(DriverFactory.getDriver().findElement(By.linkText("Dashboard")).getText(), "Dashboard" );
     }
 
@@ -55,8 +61,11 @@ public class UserRegistrationStepDefs {
     public void enterIncorrectDataToRegistrationForm() throws InterruptedException {
         DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys("test@test.com");
         DriverFactory.getDriver().findElement(By.id("reg_password")).sendKeys("testassword123");
-        DriverFactory.getDriver().findElement(By.name("register")).click();
-        Thread.sleep(Duration.ofSeconds(10));
+        for (int i=0;i<3;i++){
+            if (DriverFactory.getDriver().findElements(By.xpath("//ul[@class='woocommerce-error']//li")).size()==0){
+                DriverFactory.getDriver().findElement(By.name("register")).click();
+            }
+        }
     }
 
     @Then("Invalid email error appears")

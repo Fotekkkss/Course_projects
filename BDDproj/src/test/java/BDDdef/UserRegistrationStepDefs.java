@@ -1,6 +1,8 @@
 package BDDdef;
 
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
+import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -9,6 +11,9 @@ import pl.testeroprogramowania.utils.DriverFactory;
 import pl.testeroprogramowania.utils.SeleniumHelper;
 
 import java.time.Duration;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 
 public class UserRegistrationStepDefs {
@@ -72,5 +77,27 @@ public class UserRegistrationStepDefs {
     public void invalidEmailErrorAppears() {
         String error = DriverFactory.getDriver().findElement(By.xpath("//ul[@class='woocommerce-error']//li")).getText();
         Assert.assertTrue(error.contains("An account is already registered with your email address"));
+    }
+
+    @And("Enter email {string} and password {string}")
+    public void enterEmailAndPassword(String email, String password) {
+        DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys(email);
+        DriverFactory.getDriver().findElement(By.id("reg_password")).sendKeys(password);
+        for (int i=0;i<3;i++){
+            if (DriverFactory.getDriver().findElements(By.xpath("//ul[@class='woocommerce-error']//li")).size()==0){
+                DriverFactory.getDriver().findElement(By.name("register")).click();
+            }
+        }
+    }
+
+    @And("Enter tasks to do")
+    public void enterExercisesToDo(List<Task> tasks) {
+       tasks.forEach(System.out::println);
+
+    }
+    @DataTableType
+    public Task handeTask(Map<String, String> table){
+
+        return new Task(table.get("name"),table.get("value"),table.get("status"));
     }
 }

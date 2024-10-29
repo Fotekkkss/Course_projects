@@ -1,103 +1,72 @@
 package BDDdef;
 
-import io.cucumber.datatable.DataTable;
 import io.cucumber.java.After;
-import io.cucumber.java.DataTableType;
 import io.cucumber.java.en.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.Assert;
+import pl.testeroprogramowania.pages.HomePage;
+import pl.testeroprogramowania.pages.LoggedUserPage;
+import pl.testeroprogramowania.pages.RegisterUserPage;
 import pl.testeroprogramowania.utils.DriverFactory;
 import pl.testeroprogramowania.utils.SeleniumHelper;
-
-import java.time.Duration;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 
 public class UserRegistrationStepDefs {
 
-    @After
+    public HomePage homePage;
 
+    @After
     public void tearDown(){
         DriverFactory.quitDriver();
     }
 
     @Given("User is on main shop age")
     public void user_is_on_main_shop_age() {
-        DriverFactory.getDriver().manage().window().maximize();
-        ChromeOptions optionsChrome = new ChromeOptions();
-        optionsChrome.addArguments("--disable-search-engine-choice-screen");
-        DriverFactory.getDriver().get("http://seleniumdemo.com/");
+        homePage = new HomePage();
+        homePage.openHomePage();
     }
 
     @When("Go to My Account page")
     public void goToMyAccountPage() {
-        DriverFactory.getDriver().findElement(By.xpath("//span[text()='My account']")).click();
+        homePage.goToMyAccountPage();
     }
 
     @And("Enter correct data to registration form")
     public void enterCorrectDataToRegistrationForm() {
         int random = (int) (Math.random()*1000);
-        DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys("test"+random+"@test.com");
-        DriverFactory.getDriver().findElement(By.id("reg_password")).sendKeys("testassworaboba%@d123");
-        for (int i=0;i<3;i++){
-            if (DriverFactory.getDriver().findElements(By.name("register")).size()>0){
-                DriverFactory.getDriver().findElement(By.name("register")).click();
-            }
-        }
-
+        RegisterUserPage registerUserPage = new RegisterUserPage();
+        registerUserPage.registerUser("test"+random+"@test.com","testassworaboba%@d123");
     }
 
     @Then("User is redirected to My Account page")
     public void userIsRedirectedToMyAccountPage() throws InterruptedException {
-        SeleniumHelper.waitForElementToExist(By.linkText("Dashboard"));
-        Assert.assertEquals(DriverFactory.getDriver().findElement(By.linkText("Dashboard")).getText(), "Dashboard" );
+        LoggedUserPage loggedUserPage = new LoggedUserPage();
+        Assert.assertTrue(loggedUserPage.isDashboardLinkDisplayed());
     }
 
     @But("Register form is not visible")
     public void registerFormIsNotVisible() {
-        int emailInputsSize = DriverFactory.getDriver().findElements(By.id("reg_email")).size();
-        Assert.assertTrue(emailInputsSize==0);
+        RegisterUserPage registerUserPage = new RegisterUserPage();
+        Assert.assertTrue(registerUserPage.getUsernameInpputSize()==0);
     }
 
     @And("Enter incorrect data to registration form")
     public void enterIncorrectDataToRegistrationForm() throws InterruptedException {
-        DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys("test@test.com");
-        DriverFactory.getDriver().findElement(By.id("reg_password")).sendKeys("testassword123");
-        for (int i=0;i<3;i++){
-            if (DriverFactory.getDriver().findElements(By.xpath("//ul[@class='woocommerce-error']//li")).size()==0){
-                DriverFactory.getDriver().findElement(By.name("register")).click();
-            }
-        }
+        RegisterUserPage registerUserPage = new RegisterUserPage();
+        registerUserPage.registerUser("test@test.com", "testassword123");
     }
 
     @Then("Invalid email error appears")
     public void invalidEmailErrorAppears() {
-        String error = DriverFactory.getDriver().findElement(By.xpath("//ul[@class='woocommerce-error']//li")).getText();
-        Assert.assertTrue(error.contains("An account is already registered with your email address"));
+        RegisterUserPage registerUserPage = new RegisterUserPage();
+        Assert.assertTrue(registerUserPage.getErrorText().contains("An account is already registered with your email address"));
     }
 
     @And("Enter email {string} and password {string}")
     public void enterEmailAndPassword(String email, String password) {
-        DriverFactory.getDriver().findElement(By.id("reg_email")).sendKeys(email);
-        DriverFactory.getDriver().findElement(By.id("reg_password")).sendKeys(password);
-        for (int i=0;i<3;i++){
-            if (DriverFactory.getDriver().findElements(By.xpath("//ul[@class='woocommerce-error']//li")).size()==0){
-                DriverFactory.getDriver().findElement(By.name("register")).click();
-            }
-        }
-    }
-
-    @And("Enter tasks to do")
-    public void enterExercisesToDo(List<Task> tasks) {
-       tasks.forEach(System.out::println);
-
-    }
-    @DataTableType
-    public Task handeTask(Map<String, String> table){
-
-        return new Task(table.get("name"),table.get("value"),table.get("status"));
+        int random = (int) (Math.random()*1000);
+        RegisterUserPage registerUserPage = new RegisterUserPage();
+        registerUserPage.registerUser(email,password);
     }
 }

@@ -42,7 +42,6 @@ public class BaseTest {
     }
     @AfterSuite
     public void afterSuite(){
-        htmlReporter.flush();
         extentReports.flush();
     }
 }
